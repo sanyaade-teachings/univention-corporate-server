@@ -1,0 +1,11 @@
+product: ucs
+release: "5.0"
+version: [8]
+scope: ucs_5.0-0-errata5.0-8
+src: univention-printserver
+fix: 13.0.11-2
+desc: |
+ This update addresses the following issues:
+ * CUPS now uses the UCS TLS certificate instead of
+   a self-signed one.
+bug: [52879]
