@@ -1754,8 +1754,15 @@ class ucs(object):
         object = copy.deepcopy(old_object)
         # DN mapping
         dn_mapping_stored = []
+        move = False
+
+        if 'olddn' in object:
+            move = True
+
         for dntype in ['dn', 'olddn']:  # check if all available dn's are already mapped
             if dntype in object and self._get_dn_by_ucs(object[dntype]):
+                if dntype == 'dn' and move:
+                    continue
                 object[dntype] = self._get_dn_by_ucs(object[dntype])
                 object[dntype] = self.dn_mapped_to_base(object[dntype], self.lo_s4.base)
                 dn_mapping_stored.append(dntype)
