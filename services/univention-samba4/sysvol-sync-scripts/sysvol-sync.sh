@@ -252,7 +252,7 @@ sync_from_active_downstream_DCs() {
 		## check if downstream s4dc has changes:
 		stderr_log_debug "[$log_prefix] rsync check for changes on downstream DC"
 
-		rsync_options=(-aAX --delete --delete-excluded \
+		rsync_options=(-aAX --filter='-x! security.NTACL' --delete --delete-excluded --filter='-xr! security.NTACL' \
 			--exclude='scripts/user/.*.vbs.[[:alnum:]][[:alnum:]][[:alnum:]][[:alnum:]][[:alnum:]][[:alnum:]]' \
 			)
 
@@ -380,9 +380,9 @@ if [ ! $? -eq 1 ]; then
 fi
 
 if [ "$1" = '--overwrite-local' ]; then
-	default_rsync_options=("-aAX")
+	default_rsync_options=("-aAX" --filter='-x! security.NTACL')
 else
-	default_rsync_options=("-auAX" "--dirs-update")
+	default_rsync_options=("-auAX" --filter='-x! security.NTACL' "--dirs-update")
 fi
 
 touch "$SYSVOL_LOCKFILE"
